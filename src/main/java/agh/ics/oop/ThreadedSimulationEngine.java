@@ -1,9 +1,6 @@
 package agh.ics.oop;
 
-import agh.ics.oop.gui.AlertHandler;
-import agh.ics.oop.gui.DominantGenotypeHandler;
-import agh.ics.oop.gui.GraphsHandler;
-import agh.ics.oop.gui.GridHandler;
+import agh.ics.oop.gui.*;
 
 public class ThreadedSimulationEngine  implements IEngine, Runnable{
     private final AbstractWorldMap map;
@@ -12,10 +9,11 @@ public class ThreadedSimulationEngine  implements IEngine, Runnable{
     private final GridHandler gridHandler;
     private final DominantGenotypeHandler dominantGenotypeHandler;
     private final GraphsHandler graphsHandler;
+    private final Tracker tracker;
 
     public ThreadedSimulationEngine(AbstractWorldMap map, GridHandler gridHandler,
                                     DominantGenotypeHandler dominantGenotypeHandler,
-                                    GraphsHandler graphsHandler) {
+                                    GraphsHandler graphsHandler, Tracker tracker) {
         this.map = map;
         this.end = false;
         this.map.placeAnimals();
@@ -25,11 +23,11 @@ public class ThreadedSimulationEngine  implements IEngine, Runnable{
         this.gridHandler = gridHandler;
         this.dominantGenotypeHandler = dominantGenotypeHandler;
         this.graphsHandler = graphsHandler;
+        this.tracker = tracker;
     }
 
     @Override
     public void run() {
-        int loop = 0;
         while(true) {
             if (this.map.isRunning() && !end) {
                 this.map.removeTheDead();
@@ -42,9 +40,13 @@ public class ThreadedSimulationEngine  implements IEngine, Runnable{
                 this.map.findParents();
                 this.map.plantGrass();
                 this.map.updateStatistics();
-                this.gridHandler.setGrid();
+                Animal trackedAnimal = this.gridHandler.setGrid();
+                if (trackedAnimal != null) {
+                    this.tracker.takeTrackedAnimal(trackedAnimal);
+                }
                 this.dominantGenotypeHandler.setGenotypeLabel();
                 this.graphsHandler.setGraphs();
+                this.tracker.setTracker();
                 this.map.updateDataLines();
                 this.map.nextEra();
 
@@ -57,8 +59,6 @@ public class ThreadedSimulationEngine  implements IEngine, Runnable{
                 if (this.map.getAllAnimals().size() == 0) {
                     this.end = true;
                 }
-                System.out.println(loop);
-                loop++;
             } else {
                 Thread.onSpinWait();
                 }

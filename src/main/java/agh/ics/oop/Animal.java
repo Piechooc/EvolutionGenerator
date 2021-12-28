@@ -1,7 +1,11 @@
 package agh.ics.oop;
 
+import agh.ics.oop.gui.Tracker;
+
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Animal extends AbstractWorldMapElement implements IMapElement{
     private MapDirection orientation = MapDirection.NORTH;
@@ -13,6 +17,7 @@ public class Animal extends AbstractWorldMapElement implements IMapElement{
     private int amountOfBabies;
     private int eraOfBirth;
     private boolean tracker;
+    private Tracker animalTracker;
 
     public Animal() {
         this.position = new Vector2d(2, 2);
@@ -77,7 +82,6 @@ public class Animal extends AbstractWorldMapElement implements IMapElement{
         this.observersList.remove(observer);
     }
 
-    //todo: do poprawy
     private void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
         for (IPositionChangeObserver observer : this.observersList)
             observer.positionChanged(oldPosition, newPosition, this);
@@ -103,6 +107,26 @@ public class Animal extends AbstractWorldMapElement implements IMapElement{
             baby.genotype = new Genotype(this.genotype, this.energy, partner.genotype, partner.energy);
         } else {
             baby.genotype = new Genotype(partner.genotype, partner.energy, this.genotype, this.energy);
+        }
+
+        if (this.getTracker() || partner.getTracker()) {
+            if (this.getTracker()) {
+                Animal tempAnimal = this.animalTracker.getTrackedAnimal();
+                if (tempAnimal.equals(this) || tempAnimal.equals(partner)) {
+                    this.animalTracker.increaseNumberOfChildren();
+                }
+                this.animalTracker.increaseNumberOfAllFamily();
+                baby.changeTracker();
+                baby.setAnimalTracker(this.animalTracker);
+            } else {
+                Animal tempAnimal = partner.animalTracker.getTrackedAnimal();
+                if (tempAnimal.equals(this) || tempAnimal.equals(partner)) {
+                    partner.animalTracker.increaseNumberOfChildren();
+                }
+                partner.animalTracker.increaseNumberOfAllFamily();
+                baby.changeTracker();
+                baby.setAnimalTracker(partner.animalTracker);
+            }
         }
 
         this.amountOfBabies++;
@@ -142,5 +166,22 @@ public class Animal extends AbstractWorldMapElement implements IMapElement{
 
     public Genotype getAnimalGenotype() {
         return this.genotype;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Animal animal = (Animal) o;
+        return amountOfBabies == animal.amountOfBabies && eraOfBirth == animal.eraOfBirth && tracker == animal.tracker && map.equals(animal.map) && Objects.equals(observersList, animal.observersList) && genotype.equals(animal.genotype) && Objects.equals(animalTracker, animal.animalTracker);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(map, observersList, genotype, amountOfBabies, eraOfBirth, tracker, animalTracker);
+    }
+
+    public void setAnimalTracker(Tracker animalTracker) {
+        this.animalTracker = animalTracker;
     }
 }

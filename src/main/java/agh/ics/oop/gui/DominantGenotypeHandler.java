@@ -19,6 +19,6 @@ public class DominantGenotypeHandler {
     }
 
     public void setGenotypeLabel() {
-        Platform.runLater(() -> genotypeLabel.setText(Arrays.toString(this.map.getDominantGenotype().getGenotype())));
+        Platform.runLater(() -> this.genotypeLabel.setText(Arrays.toString(this.map.getDominantGenotype().getGenotype())));
     }
 }

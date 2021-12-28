@@ -34,12 +34,12 @@ public class AlertHandler {
     public void handleAllAnimalsWithDominantGenotype(ArrayList<Animal> list) {
         this.alert.setTitle("Animals with dominant genotype");
         ArrayList<Vector2d> positions = new ArrayList<>();
-        Set<Animal> setFromList = new HashSet<Animal>(list);
+        Set<Animal> setFromList = new HashSet<>(list);
 
         for (Animal animal : setFromList) {
             positions.add(animal.getPosition());
         }
-        this.alert.setContentText("Positions of animals with dominant genotype: " + positions.toString());
+        this.alert.setContentText("Positions of animals with dominant genotype: " + positions);
         Platform.runLater(this.alert::show);
     }
 

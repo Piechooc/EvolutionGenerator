@@ -36,7 +36,7 @@ public class GridHandler {
         return this.grid;
     }
 
-    public void setGrid() {
+    public Animal setGrid() {
         Platform.runLater(() -> {
             this.grid.setGridLinesVisible(false);
             this.grid.setGridLinesVisible(true);
@@ -64,15 +64,10 @@ public class GridHandler {
                         GridPane.setHalignment(animalButton, HPos.CENTER);
                         GridPane.setValignment(animalButton, VPos.CENTER);
                         animalButton.setStyle("-fx-border-color: transparent ");
-                        if (this.map.isInJungle(position)){
-                            animalButton.setStyle("-fx-background-color: forestgreen ;");
-                        } else {
-                            animalButton.setStyle("-fx-background-color: greenyellow;");
-                        }
 
                         int animalEnergy = ((Animal) this.map.objectAt(position)).getEnergy();
                         int startEnergy = this.map.getStartEnergy();
-                        if (0 < animalEnergy && animalEnergy < startEnergy * 0.2) {
+                        if (0 <= animalEnergy && animalEnergy < startEnergy * 0.2) {
                             animalButton.setStyle("-fx-background-color: black");
                         } else if (startEnergy * 0.2 <= animalEnergy && animalEnergy < startEnergy * 0.4) {
                             animalButton.setStyle("-fx-background-color: dimgray");
@@ -82,8 +77,6 @@ public class GridHandler {
                             animalButton.setStyle("-fx-background-color: lightgray");
                         } else if (startEnergy * 0.8 <= animalEnergy) {
                             animalButton.setStyle("-fx-background-color: white");
-                        } else if (0 == animalEnergy) {
-                            animalButton.setStyle("-fx-background-color: lightsalmon");
                         }
 
                         animalButton.setOnAction(click -> {
@@ -100,10 +93,6 @@ public class GridHandler {
                             }
                         });
 
-                        if(((Animal) map.objectAt(position)).getTracker()){
-                            animalButton.setStyle("-fx-background-color: crimson");
-                        }
-
                         grid.add(animalButton, x, y);
                     } else {
                         Label newLabel = new Label();
@@ -119,5 +108,7 @@ public class GridHandler {
                 }
             }
         });
+
+        return this.trackedAnimal;
     }
 }

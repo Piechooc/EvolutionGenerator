@@ -3,9 +3,7 @@ package agh.ics.oop;
 import agh.ics.oop.gui.CSVWriter;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -355,10 +353,6 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
                 String.valueOf((this.allAverageBabies / thisEra))});
     }
 
-    public String convertToCSV(String[] data) {
-        return String.join(",", data);
-    }
-
     public void saveFile(String fileName) throws IOException {
         finishDataLines();
         File file = new File(fileName);
@@ -425,10 +419,6 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
 
     public ArrayList<Animal> getAnimalsWithDominantGenotype() {
         return this.animalsWithDominantGenotype;
-    }
-
-    public List<String[]> getDataLines() {
-        return this.dataLines;
     }
 
     public int getStartEnergy() {
