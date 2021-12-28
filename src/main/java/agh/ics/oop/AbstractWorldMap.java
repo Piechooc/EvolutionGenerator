@@ -34,11 +34,13 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     protected int era;
     protected int numberOfAnimals;
     protected int numberOfPlants;
-    protected int averageEnergy;
+    protected double averageEnergy;
     protected int numberOfDeadAnimals;
-    protected int averageLifespan;
-    protected int averageNumberOfBabies;
+    protected double averageLifespan;
+    protected double averageNumberOfBabies;
     protected Map<Genotype, Integer> allGenotype = new LinkedHashMap<>();
+    protected Map<Genotype, ArrayList<Animal>> allGenotypeWithAnimals = new LinkedHashMap<>();
+    protected ArrayList<Animal> animalsWithDominantGenotype = new ArrayList<>();
     protected Genotype dominantGenotype;
     protected int numberOfAnimalsWithDominantGenotype;
 
@@ -320,15 +322,15 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
         return this.numberOfPlants;
     }
 
-    public int getAverageEnergy() {
+    public double getAverageEnergy() {
         return this.averageEnergy;
     }
 
-    public int getAverageLifespan() {
+    public double getAverageLifespan() {
         return this.averageLifespan;
     }
 
-    public int getAverageNumberOfBabies() {
+    public double getAverageNumberOfBabies() {
         return this.averageNumberOfBabies;
     }
 
@@ -338,6 +340,10 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
 
     public int getNumberOfAnimalsWithDominantGenotype() {
         return this.numberOfAnimalsWithDominantGenotype;
+    }
+
+    public ArrayList<Animal> getAnimalsWithDominantGenotype() {
+        return this.animalsWithDominantGenotype;
     }
 
     public int getStartEnergy() {
@@ -384,7 +390,7 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
             for (Animal animal : this.animalList) {
                 allEnergy += animal.getEnergy();
             }
-            this.averageEnergy = allEnergy / animalList.size();
+            this.averageEnergy = (double) (allEnergy / animalList.size());
         } else {
             this.averageEnergy = 0;
         }
@@ -417,8 +423,14 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
                 int numberOfAnimalsWithThisGenotype = this.allGenotype.get(animal.getAnimalGenotype());
                 numberOfAnimalsWithThisGenotype++;
                 this.allGenotype.replace(animal.getAnimalGenotype(), numberOfAnimalsWithThisGenotype);
+                ArrayList<Animal> list = this.allGenotypeWithAnimals.get(animal.getAnimalGenotype());
+                list.add(animal);
+                this.allGenotypeWithAnimals.replace(animal.getAnimalGenotype(), list);
             } else {
                 this.allGenotype.put(animal.getAnimalGenotype(), 1);
+                ArrayList<Animal> list = new ArrayList<>();
+                list.add(animal);
+                this.allGenotypeWithAnimals.put(animal.getAnimalGenotype(), list);
             }
         }
 
@@ -429,6 +441,8 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
                 this.dominantGenotype = genotype;
             }
         }
+
+        this.animalsWithDominantGenotype = this.allGenotypeWithAnimals.get(this.dominantGenotype);
     }
 
     public void updateStatistics() {

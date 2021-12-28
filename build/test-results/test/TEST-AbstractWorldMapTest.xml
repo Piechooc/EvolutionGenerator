@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AbstractWorldMapTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-12-28T12:12:22" hostname="DESKTOP-ARRLIK4" time="0.028">
+  <properties/>
+  <testcase name="testUpdateDominantGenotype()" classname="AbstractWorldMapTest" time="0.028"/>
+  <system-out><![CDATA[(3,3)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

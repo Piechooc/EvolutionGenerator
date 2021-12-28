@@ -6,6 +6,11 @@ public class Grass extends AbstractWorldMapElement implements IMapElement{
     }
 
     @Override
+    public Vector2d getPosition() {
+        return this.position;
+    }
+
+    @Override
     public String toString() {
         return "*";
     }

@@ -10,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -34,6 +35,8 @@ public class App extends Application {
     //maps
     private UnboundedMap unboundedMap;
     private BoundedMap boundedMap;
+
+
 
     public int getInt(String input) {
         try {
@@ -99,8 +102,8 @@ public class App extends Application {
 
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10, 10, 10, 10));
-        grid.setVgap(8);
-        grid.setHgap(200);
+        grid.setVgap(10);
+        grid.setHgap(10);
 
         GridHandler unboundedMapGrid = new GridHandler(this.unboundedMap, this.paramWidth, this.paramHeight);
         DominantGenotypeHandler unboundedMapDominantGenotypeHandler = new DominantGenotypeHandler(this.unboundedMap);
@@ -114,55 +117,80 @@ public class App extends Application {
 
         Label unboundedMapLabel = new Label("Unbounded Map");
         GridPane.setConstraints(unboundedMapLabel, 0, 0, 2, 1);
-        GridPane.setHalignment(unboundedMapLabel, HPos.CENTER);
+//        GridPane.setHalignment(unboundedMapLabel, HPos.CENTER);
         GridPane unboundedMapGridPane = unboundedMapGrid.getGrid();
         GridPane.setConstraints(unboundedMapGridPane, 0, 1, 2, 1);
-        GridPane.setHalignment(unboundedMapGridPane, HPos.CENTER);
-        GridPane.setValignment(unboundedMapGridPane, VPos.CENTER);
+//        GridPane.setHalignment(unboundedMapGridPane, HPos.CENTER);
+//        GridPane.setValignment(unboundedMapGridPane, VPos.CENTER);
 
         Label boundedMapLabel = new Label("Bounded Map");
         GridPane.setConstraints(boundedMapLabel, 2, 0, 2, 1);
-        GridPane.setHalignment(boundedMapLabel, HPos.CENTER);
+//        GridPane.setHalignment(boundedMapLabel, HPos.CENTER);
         GridPane boundedMapGridPane = boundedMapGrid.getGrid();
         GridPane.setConstraints(boundedMapGridPane, 2, 1, 2, 1);
-        GridPane.setHalignment(boundedMapGridPane, HPos.CENTER);
-        GridPane.setValignment(boundedMapGridPane, VPos.CENTER);
+//        GridPane.setHalignment(boundedMapGridPane, HPos.CENTER);
+//        GridPane.setValignment(boundedMapGridPane, VPos.CENTER);
 
         Label unboundedMapDominantGenotypeLabel = new Label("Dominant genotype");
         GridPane.setConstraints(unboundedMapDominantGenotypeLabel, 0, 2, 2, 1);
-        GridPane.setHalignment(unboundedMapDominantGenotypeLabel, HPos.CENTER);
+//        GridPane.setHalignment(unboundedMapDominantGenotypeLabel, HPos.CENTER);
         Label unboundedMapDominantGenotype = unboundedMapDominantGenotypeHandler.getGenotypeLabel();
         GridPane.setConstraints(unboundedMapDominantGenotype, 0, 3, 2, 1);
-        GridPane.setHalignment(unboundedMapDominantGenotype, HPos.CENTER);
-        GridPane.setValignment(unboundedMapDominantGenotype, VPos.CENTER);
+//        GridPane.setHalignment(unboundedMapDominantGenotype, HPos.CENTER);
+//        GridPane.setValignment(unboundedMapDominantGenotype, VPos.CENTER);
 
         Label boundedMapDominantGenotypeLabel = new Label("Dominant genotype");
         GridPane.setConstraints(boundedMapDominantGenotypeLabel, 2, 2, 2, 1);
-        GridPane.setHalignment(boundedMapDominantGenotypeLabel, HPos.CENTER);
+//        GridPane.setHalignment(boundedMapDominantGenotypeLabel, HPos.CENTER);
         Label boundedMapDominantGenotype = boundedMapDominantGenotypeHandler.getGenotypeLabel();
         GridPane.setConstraints(boundedMapDominantGenotype, 2, 3, 2, 1);
-        GridPane.setHalignment(boundedMapDominantGenotype, HPos.CENTER);
-        GridPane.setValignment(boundedMapDominantGenotype, VPos.CENTER);
+//        GridPane.setHalignment(boundedMapDominantGenotype, HPos.CENTER);
+//        GridPane.setValignment(boundedMapDominantGenotype, VPos.CENTER);
 
         Label unboundedMapGraphsLabel = new Label("Graphs");
         GridPane.setConstraints(unboundedMapGraphsLabel, 0, 4, 2, 1);
-        GridPane.setHalignment(unboundedMapGraphsLabel, HPos.CENTER);
-        GridPane unboundedMapGraphs = unboundedMapGraphsHandler.getGraphs();
-        GridPane.setConstraints(unboundedMapGraphs, 0, 5, 2, 2);
-        GridPane.setHalignment(unboundedMapGraphs, HPos.CENTER);
-        GridPane.setValignment(unboundedMapGraphs, VPos.CENTER);
+//        GridPane.setHalignment(unboundedMapGraphsLabel, HPos.CENTER);
+        LineChart<Number, Number> unboundedMapFirstGraph = unboundedMapGraphsHandler.getFirstGraph();
+        GridPane.setConstraints(unboundedMapFirstGraph, 0,5);
+//        GridPane.setHalignment(unboundedMapFirstGraph, HPos.CENTER);
+//        GridPane.setValignment(unboundedMapFirstGraph, VPos.CENTER);
+        LineChart<Number, Number> unboundedMapSecondGraph = unboundedMapGraphsHandler.getSecondGraph();
+        GridPane.setConstraints(unboundedMapSecondGraph, 1,5);
+//        GridPane.setHalignment(unboundedMapSecondGraph, HPos.CENTER);
+//        GridPane.setValignment(unboundedMapSecondGraph, VPos.CENTER);
+        LineChart<Number, Number> unboundedMapThirdGraph = unboundedMapGraphsHandler.getThirdGraph();
+        GridPane.setConstraints(unboundedMapThirdGraph, 0,6);
+//        GridPane.setHalignment(unboundedMapThirdGraph, HPos.CENTER);
+//        GridPane.setValignment(unboundedMapThirdGraph, VPos.CENTER);
+        LineChart<Number, Number> unboundedMapForthGraph = unboundedMapGraphsHandler.getForthGraph();
+        GridPane.setConstraints(unboundedMapForthGraph, 1,6);
+//        GridPane.setHalignment(unboundedMapForthGraph, HPos.CENTER);
+//        GridPane.setValignment(unboundedMapForthGraph, VPos.CENTER);
+
 
         Label boundedMapGraphsLabel = new Label("Graphs");
         GridPane.setConstraints(boundedMapGraphsLabel, 2, 4, 2, 1);
-        GridPane.setHalignment(boundedMapGraphsLabel, HPos.CENTER);
-        GridPane boundedMapGraphs = boundedMapGraphsHandler.getGraphs();
-        GridPane.setConstraints(boundedMapGraphs, 2, 5, 2, 2);
-        GridPane.setHalignment(boundedMapGraphs, HPos.CENTER);
-        GridPane.setValignment(boundedMapGraphs, VPos.CENTER);
+//        GridPane.setHalignment(boundedMapGraphsLabel, HPos.CENTER);
+        LineChart<Number, Number> boundedMapFirstGraph = boundedMapGraphsHandler.getFirstGraph();
+        GridPane.setConstraints(boundedMapFirstGraph, 2,5);
+//        GridPane.setHalignment(boundedMapFirstGraph, HPos.CENTER);
+//        GridPane.setValignment(boundedMapFirstGraph, VPos.CENTER);
+        LineChart<Number, Number> boundedMapSecondGraph = boundedMapGraphsHandler.getSecondGraph();
+        GridPane.setConstraints(boundedMapSecondGraph, 3,5);
+//        GridPane.setHalignment(boundedMapSecondGraph, HPos.CENTER);
+//        GridPane.setValignment(boundedMapSecondGraph, VPos.CENTER);
+        LineChart<Number, Number> boundedMapThirdGraph = boundedMapGraphsHandler.getThirdGraph();
+        GridPane.setConstraints(boundedMapThirdGraph, 2,6);
+//        GridPane.setHalignment(boundedMapThirdGraph, HPos.CENTER);
+//        GridPane.setValignment(boundedMapThirdGraph, VPos.CENTER);
+        LineChart<Number, Number> boundedMapForthGraph = boundedMapGraphsHandler.getForthGraph();
+        GridPane.setConstraints(boundedMapForthGraph, 3,6);
+//        GridPane.setHalignment(boundedMapForthGraph, HPos.CENTER);
+//        GridPane.setValignment(boundedMapForthGraph, VPos.CENTER);
 
         Button unboundedMapStartStopButton = new Button("Pause");
         GridPane.setConstraints(unboundedMapStartStopButton, 0, 7, 2, 1);
-        GridPane.setHalignment(unboundedMapStartStopButton, HPos.CENTER);
+//        GridPane.setHalignment(unboundedMapStartStopButton, HPos.CENTER);
         unboundedMapStartStopButton.setMinSize(70, 30);
         unboundedMapStartStopButton.setOnAction(click -> {
             if (this.unboundedMap.isRunning()) {
@@ -177,7 +205,7 @@ public class App extends Application {
 
         Button boundedMapStartStopButton = new Button("Pause");
         GridPane.setConstraints(boundedMapStartStopButton, 2, 7, 2, 1);
-        GridPane.setHalignment(boundedMapStartStopButton, HPos.CENTER);
+//        GridPane.setHalignment(boundedMapStartStopButton, HPos.CENTER);
         boundedMapStartStopButton.setMinSize(70, 30);
         boundedMapStartStopButton.setOnAction(click -> {
             if (this.boundedMap.isRunning()) {
@@ -189,29 +217,37 @@ public class App extends Application {
             }
         });
 
-        Label unboundedMapWhenPausedLabel = new Label("Things you can do when simulation paused");
+        Label unboundedMapWhenPausedLabel = new Label("Things you can do when simulation's paused:");
         GridPane.setConstraints(unboundedMapWhenPausedLabel, 0, 8, 2, 1);
-        GridPane.setHalignment(unboundedMapWhenPausedLabel, HPos.CENTER);
+//        GridPane.setHalignment(unboundedMapWhenPausedLabel, HPos.CENTER);
         Button unboundedMapSaveButton = new Button("Save");
         GridPane.setConstraints(unboundedMapSaveButton, 0, 9, 2,1);
         unboundedMapSaveButton.setMinSize(70, 30);
-        GridPane.setHalignment(unboundedMapSaveButton, HPos.CENTER);
+//        GridPane.setHalignment(unboundedMapSaveButton, HPos.CENTER);
         Button unboundedMapShowAnimalsWithDominantGenotypeButton = new Button("Show Animals With Dominant Genotype");
         GridPane.setConstraints(unboundedMapShowAnimalsWithDominantGenotypeButton, 0, 10,2,1);
         unboundedMapShowAnimalsWithDominantGenotypeButton.setMinSize(70, 30);
-        GridPane.setHalignment(unboundedMapShowAnimalsWithDominantGenotypeButton, HPos.CENTER);
+//        GridPane.setHalignment(unboundedMapShowAnimalsWithDominantGenotypeButton, HPos.CENTER);
+        unboundedMapShowAnimalsWithDominantGenotypeButton.setOnAction(click -> {
+            AlertHandler alertHandler = new AlertHandler(this.unboundedMap);
+            alertHandler.handleAllAnimalsWithDominantGenotype(this.unboundedMap.getAnimalsWithDominantGenotype());
+        });
 
-        Label boundedMapWhenPausedLabel = new Label("Things you can do when simulation paused");
+        Label boundedMapWhenPausedLabel = new Label("Things you can do when simulation's paused:");
         GridPane.setConstraints(boundedMapWhenPausedLabel, 2, 8, 2, 1);
-        GridPane.setHalignment(boundedMapWhenPausedLabel, HPos.CENTER);
+//        GridPane.setHalignment(boundedMapWhenPausedLabel, HPos.CENTER);
         Button boundedMapSaveButton = new Button("Save");
         GridPane.setConstraints(boundedMapSaveButton, 2, 9,2,1);
         boundedMapSaveButton.setMinSize(70, 30);
-        GridPane.setHalignment(boundedMapSaveButton, HPos.CENTER);
+//        GridPane.setHalignment(boundedMapSaveButton, HPos.CENTER);
         Button boundedMapShowAnimalsWithDominantGenotypeButton = new Button("Show Animals With Dominant Genotype");
         GridPane.setConstraints(boundedMapShowAnimalsWithDominantGenotypeButton, 2, 10,2,1);
         boundedMapShowAnimalsWithDominantGenotypeButton.setMinSize(70, 30);
-        GridPane.setHalignment(boundedMapShowAnimalsWithDominantGenotypeButton, HPos.CENTER);
+//        GridPane.setHalignment(boundedMapShowAnimalsWithDominantGenotypeButton, HPos.CENTER);
+        boundedMapShowAnimalsWithDominantGenotypeButton.setOnAction(click -> {
+            AlertHandler alertHandler = new AlertHandler(this.boundedMap);
+            alertHandler.handleAllAnimalsWithDominantGenotype(this.boundedMap.getAnimalsWithDominantGenotype());
+        });
 
 
 
@@ -219,8 +255,10 @@ public class App extends Application {
                 boundedMapLabel, boundedMapGridPane,
                 unboundedMapDominantGenotypeLabel, unboundedMapDominantGenotype,
                 boundedMapDominantGenotypeLabel, boundedMapDominantGenotype,
-                unboundedMapGraphsLabel, unboundedMapGraphs,
-                boundedMapGraphsLabel, boundedMapGraphs,
+                unboundedMapGraphsLabel, unboundedMapFirstGraph, unboundedMapSecondGraph,
+                unboundedMapThirdGraph, unboundedMapForthGraph,
+                boundedMapGraphsLabel, boundedMapFirstGraph, boundedMapSecondGraph,
+                boundedMapThirdGraph, boundedMapForthGraph,
                 unboundedMapStartStopButton, boundedMapStartStopButton,
                 unboundedMapWhenPausedLabel, unboundedMapSaveButton,
                 unboundedMapShowAnimalsWithDominantGenotypeButton,
@@ -326,9 +364,6 @@ public class App extends Application {
                 magicBoundedMapLabel, magicBoundedMapCheckBox,
                 startButton);
 
-
-
-        grid.setAlignment(Pos.CENTER);
 
         return new Scene(grid, 320, 350);
     }

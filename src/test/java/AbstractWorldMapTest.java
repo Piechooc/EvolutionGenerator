@@ -48,10 +48,12 @@ class AbstractWorldMapTest {
         testMap.place(animal2, position);
         testMap.place(animal3, position);
         testMap.place(animal4, position);
+        System.out.println(animal1.getPosition());
         testMap.updateDominantGenotype();
         Genotype testGenotype = testMap.getDominantGenotype();
         int testNumberOfAnimalsWithDominantGenotype = testMap.getNumberOfAnimalsWithDominantGenotype();
         assertEquals(testGenotype, animal1.getAnimalGenotype());
-        assertEquals(testNumberOfAnimalsWithDominantGenotype, 3);
+        assertEquals(3, testNumberOfAnimalsWithDominantGenotype);
+        assertEquals(3, testMap.getAnimalsWithDominantGenotype().size());
     }
 }

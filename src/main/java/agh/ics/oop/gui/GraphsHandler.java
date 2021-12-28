@@ -12,7 +12,6 @@ import javafx.scene.layout.GridPane;
 
 public class GraphsHandler {
     private final AbstractWorldMap map;
-    private final GridPane grid = new GridPane();
     private final LineChart<Number, Number> numberOfElementsGraph;
     private final LineChart<Number, Number> averageEnergyGraph;
     private final LineChart<Number, Number> averageLifespanGraph;
@@ -29,11 +28,32 @@ public class GraphsHandler {
 
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
+        xAxis.setAnimated(false);
+        yAxis.setAnimated(true);
+
+        NumberAxis xAxis2 = new NumberAxis();
+        NumberAxis yAxis2 = new NumberAxis();
+        xAxis.setAnimated(false);
+        yAxis.setAnimated(true);
+
+        NumberAxis xAxis3 = new NumberAxis();
+        NumberAxis yAxis3 = new NumberAxis();
+        xAxis.setAnimated(false);
+        yAxis.setAnimated(true);
+
+        NumberAxis xAxis4 = new NumberAxis();
+        NumberAxis yAxis4 = new NumberAxis();
+        xAxis.setAnimated(false);
+        yAxis.setAnimated(true);
 
         this.numberOfElementsGraph = new LineChart<>(xAxis, yAxis);
-        this.averageEnergyGraph = new LineChart<>(xAxis, yAxis);
-        this.averageLifespanGraph = new LineChart<>(xAxis, yAxis);
-        this.averageBabiesGraph = new LineChart<>(xAxis, yAxis);
+        this.numberOfElementsGraph.setAnimated(true);
+        this.averageEnergyGraph = new LineChart<>(xAxis2, yAxis2);
+        this.averageEnergyGraph.setAnimated(true);
+        this.averageLifespanGraph = new LineChart<>(xAxis3, yAxis3);
+        this.averageLifespanGraph.setAnimated(true);
+        this.averageBabiesGraph = new LineChart<>(xAxis4, yAxis4);
+        this.averageBabiesGraph.setAnimated(true);
 
         this.numberOfAnimalSeries = new XYChart.Series<>();
         this.numberOfAnimalSeries.setName("Number of animals");
@@ -47,44 +67,39 @@ public class GraphsHandler {
         this.averageBabiesSeries.setName("Average number of babies");
     }
 
-    public GridPane getGraphs() {
+    public LineChart<Number, Number> getFirstGraph() {
         this.numberOfElementsGraph.getData().add(this.numberOfAnimalSeries);
         this.numberOfElementsGraph.getData().add(this.numberOfGrassSeries);
         this.numberOfElementsGraph.setCreateSymbols(false);
-        this.numberOfElementsGraph.setMaxSize(50, 50);
-        GridPane.setConstraints(this.numberOfElementsGraph, 0, 0);
-        GridPane.setHalignment(this.numberOfElementsGraph, HPos.CENTER);
-        GridPane.setValignment(this.numberOfElementsGraph, VPos.CENTER);
+        this.numberOfElementsGraph.setMaxSize(350, 200);
+        this.numberOfElementsGraph.setMinSize(150, 75);
+        return this.numberOfElementsGraph;
+    }
 
+    public LineChart<Number, Number> getSecondGraph() {
         this.averageEnergyGraph.getData().add(this.averageEnergySeries);
         this.averageEnergyGraph.setCreateSymbols(false);
-        this.averageEnergyGraph.setMaxSize(50, 50);
-        GridPane.setConstraints(this.averageEnergyGraph, 1, 0);
-        GridPane.setHalignment(this.averageEnergyGraph, HPos.CENTER);
-        GridPane.setValignment(this.averageEnergyGraph, VPos.CENTER);
+        this.averageEnergyGraph.setMaxSize(350, 200);
+        this.averageEnergyGraph.setMinSize(150, 75);
+        return this.averageEnergyGraph;
+    }
 
+    public LineChart<Number, Number> getThirdGraph() {
         this.averageLifespanGraph.getData().add(this.averageLifespanSeries);
         this.averageLifespanGraph.setCreateSymbols(false);
-        this.averageLifespanGraph.setMaxSize(100, 100);
-        GridPane.setConstraints(this.averageLifespanGraph, 0, 1);
-        GridPane.setHalignment(this.averageLifespanGraph, HPos.CENTER);
-        GridPane.setValignment(this.averageLifespanGraph, VPos.CENTER);
+        this.averageLifespanGraph.setMaxSize(350, 200);
+        this.averageLifespanGraph.setMinSize(150, 75);
+        return this.averageLifespanGraph;
+    }
 
+    public LineChart<Number, Number> getForthGraph() {
         this.averageBabiesGraph.getData().add(this.averageBabiesSeries);
         this.averageBabiesGraph.setCreateSymbols(false);
-        this.averageBabiesGraph.setMaxSize(100, 100);
-        GridPane.setConstraints(this.averageBabiesGraph, 1, 1);
-        GridPane.setHalignment(this.averageBabiesGraph, HPos.CENTER);
-        GridPane.setValignment(this.averageBabiesGraph, VPos.CENTER);
-
-        this.grid.setPadding(new Insets(10, 10, 10, 10));
-        this.grid.setVgap(10);
-        this.grid.setHgap(10);
-        this.grid.getChildren().addAll(this.numberOfElementsGraph,
-                this.averageEnergyGraph, this.averageLifespanGraph, this.averageBabiesGraph);
-
-        return this.grid;
+        this.averageBabiesGraph.setMaxSize(350, 200);
+        this.averageBabiesGraph.setMinSize(150, 75);
+        return this.averageBabiesGraph;
     }
+
 
     public void setGraphs() {
         Platform.runLater(() -> {

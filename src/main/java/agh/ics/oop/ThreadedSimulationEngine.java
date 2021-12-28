@@ -60,8 +60,9 @@ public class ThreadedSimulationEngine  implements IEngine, Runnable{
                 loop++;
             } else {
                 Thread.onSpinWait();
+                }
             }
         }
     }
 
-}
+

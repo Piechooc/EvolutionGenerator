@@ -12,6 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
+import java.util.ArrayList;
+
 public class GridHandler {
     private final GridPane grid = new GridPane();
     private final AbstractWorldMap map;
@@ -19,13 +21,13 @@ public class GridHandler {
     private final int height;
     private final int cellSize;
     private Animal trackedAnimal;
-    private AlertHandler alertHandler;
+    private final AlertHandler alertHandler;
 
     public GridHandler(AbstractWorldMap map, int width, int height) {
         this.map = map;
         this.width = width;
         this.height = height;
-        this.cellSize = 20;
+        this.cellSize = 15;
         setGrid();
         this.alertHandler = new AlertHandler(map);
     }
@@ -50,15 +52,15 @@ public class GridHandler {
                     Vector2d position = new Vector2d(x, y);
                     if (this.map.objectAt(position) instanceof Grass) {
                         Label newLabel = new Label();
-                        newLabel.setMinWidth(this.cellSize);
-                        newLabel.setMinHeight(this.cellSize);
+                        newLabel.setMaxSize(this.cellSize, this.cellSize);
+                        newLabel.setMinSize(this.cellSize, this.cellSize);
                         newLabel.setStyle("-fx-background-color: limegreen ;");
                         grid.add(newLabel, x, y);
                     } else if (this.map.objectAt(position) instanceof Animal){
                         Button animalButton = new Button();
                         animalButton.setPadding(new Insets(0, 0, 0, 0));
-                        animalButton.setMaxWidth(this.cellSize);
-                        animalButton.setMaxHeight(this.cellSize);
+                        animalButton.setMaxSize(this.cellSize, this.cellSize);
+                        animalButton.setMinSize(this.cellSize, this.cellSize);
                         GridPane.setHalignment(animalButton, HPos.CENTER);
                         GridPane.setValignment(animalButton, VPos.CENTER);
                         animalButton.setStyle("-fx-border-color: transparent ");
@@ -86,7 +88,7 @@ public class GridHandler {
 
                         animalButton.setOnAction(click -> {
                             this.alertHandler.handleAnimalGenotype((Animal) this.map.objectAt(position));
-
+                            animalButton.setStyle("-fx-background-color: crimson");
                             ((Animal) this.map.objectAt(position)).changeTracker();
                             if (((Animal) this.map.objectAt(position)).getTracker()) {
                                 if (this.trackedAnimal != null) {
@@ -105,8 +107,8 @@ public class GridHandler {
                         grid.add(animalButton, x, y);
                     } else {
                         Label newLabel = new Label();
-                        newLabel.setMinWidth(this.cellSize);
-                        newLabel.setMinHeight(this.cellSize);
+                        newLabel.setMaxSize(this.cellSize, this.cellSize);
+                        newLabel.setMinSize(this.cellSize, this.cellSize);
                         if (map.isInJungle(position)) {
                             newLabel.setStyle("-fx-background-color: forestgreen;");
                         } else {

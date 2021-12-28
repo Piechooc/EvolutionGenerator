@@ -77,7 +77,7 @@ public class Animal extends AbstractWorldMapElement implements IMapElement{
         this.observersList.remove(observer);
     }
 
-    //todo: BYC MOZE JEST TO ZJEBANE
+    //todo: do poprawy
     private void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
         for (IPositionChangeObserver observer : this.observersList)
             observer.positionChanged(oldPosition, newPosition, this);
@@ -109,6 +109,11 @@ public class Animal extends AbstractWorldMapElement implements IMapElement{
         partner.amountOfBabies++;
 
         return baby;
+    }
+
+    @Override
+    public Vector2d getPosition() {
+        return this.position;
     }
 
     public boolean isDead() {

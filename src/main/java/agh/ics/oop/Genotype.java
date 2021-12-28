@@ -1,6 +1,7 @@
 package agh.ics.oop;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Genotype {
 
