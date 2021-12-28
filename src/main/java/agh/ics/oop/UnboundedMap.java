@@ -2,7 +2,7 @@ package agh.ics.oop;
 
 public class UnboundedMap extends AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
 
-    public UnboundedMap(int height, int width, int jungleRatio,
+    public UnboundedMap(int height, int width, float jungleRatio,
                         int startEnergy, int moveEnergy, int plantEnergy, int numberOfAnimalToPlace, boolean magic) {
         this.height = height;
         this.width = width;
@@ -24,6 +24,11 @@ public class UnboundedMap extends AbstractWorldMap implements IWorldMap, IPositi
         this.numberOfAnimalsWithDominantGenotype = 0;
         this.magic = magic;
         this.magicLeft = 3;
+        Vector2d middle = new Vector2d(this.width / 2, this.height / 2);
+        int jungleHeight = (int) (this.height * this.jungleRatio);
+        int jungleWidth = (int) (this.width * this.jungleRatio);
+        this.jungleUpperRight = new Vector2d(middle.x + (jungleWidth / 2), middle.y + (jungleHeight / 2));
+        this.jungleLowerLeft = new Vector2d(middle.x - (jungleWidth / 2), middle.y - (jungleHeight / 2));
     }
 
     public int betterModulo(int number, int modulo) {
@@ -52,9 +57,16 @@ public class UnboundedMap extends AbstractWorldMap implements IWorldMap, IPositi
         super.addAnimal(animal, unboundedPosition);
     }
 
+    @Override
     public void removeAnimal(Animal animal, Vector2d position) {
         Vector2d unboundedPosition = changePositionToUnbounded(position);
         super.removeAnimal(animal, unboundedPosition);
+    }
+
+    @Override
+    public boolean place(AbstractWorldMapElement element, Vector2d position){
+        Vector2d unboundedPosition = changePositionToUnbounded(position);
+        return super.place(element, unboundedPosition);
     }
 
     @Override

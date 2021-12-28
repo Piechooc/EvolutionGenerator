@@ -1,3 +1,4 @@
+import agh.ics.oop.BoundedMap;
 import agh.ics.oop.UnboundedMap;
 import agh.ics.oop.Vector2d;
 import org.junit.jupiter.api.Test;
@@ -27,5 +28,13 @@ class UnboundedMapTest {
         assertEquals(new Vector2d(0, 0), testMap.changePositionToUnbounded(new Vector2d(11, 11)));
         assertEquals(new Vector2d(10, 0), testMap.changePositionToUnbounded(new Vector2d(-1, 11)));
         assertEquals(new Vector2d(4, 8), testMap.changePositionToUnbounded(new Vector2d(4, 8)));
+    }
+
+    @Test
+    void testPlaceAnimals() {
+        UnboundedMap testMap = new UnboundedMap(11, 11, 1,1,
+                1,1, 3, false);
+        testMap.placeAnimals();
+        assertEquals(3, testMap.getAllAnimals().size());
     }
 }

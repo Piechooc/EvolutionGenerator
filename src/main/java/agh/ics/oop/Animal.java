@@ -112,7 +112,7 @@ public class Animal extends AbstractWorldMapElement implements IMapElement{
     }
 
     public boolean isDead() {
-        return this.energy <= 0;
+        return this.energy == 0;
     }
 
     public void setGenotype(Genotype genotype) {
