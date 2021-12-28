@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import java.util.Objects;
 
 public class Tracker {
-    private AbstractWorldMap map;
+    private final AbstractWorldMap map;
     private int numberOfChildren = 0;
     private int numberOfDescendants = 0;
     private int eraOfDeath = -1;
@@ -67,6 +67,7 @@ public class Tracker {
         this.numberOfDescendants = 0;
         this.numberOfAllFamily = 0;
         this.eraOfDeath = -1;
+        this.dead = false;
     }
 
     public Label getTrackingStatusLabel() {

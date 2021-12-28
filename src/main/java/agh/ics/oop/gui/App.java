@@ -21,6 +21,7 @@ import java.io.IOException;
 
 public class App extends Application {
     private Stage window;
+    private final GridPane grid = new GridPane();
 
     //parameters
     private int paramWidth;
@@ -92,6 +93,33 @@ public class App extends Application {
         this.magicForBoundedMap = boundedMap.isSelected();
     }
 
+    public void placeMapLabel() {
+        Label unboundedMapLabel = new Label("Unbounded Map");
+        GridPane.setConstraints(unboundedMapLabel, 0, 0, 2, 1);
+        Label boundedMapLabel = new Label("Bounded Map");
+        GridPane.setConstraints(boundedMapLabel, 2, 0, 2, 1);
+
+        this.grid.getChildren().addAll(unboundedMapLabel, boundedMapLabel);
+    }
+
+    public void placeGenotypeLabel() {
+        Label unboundedMapDominantGenotypeLabel = new Label("Dominant genotype");
+        GridPane.setConstraints(unboundedMapDominantGenotypeLabel, 0, 2, 2, 1);
+        Label boundedMapDominantGenotypeLabel = new Label("Dominant genotype");
+        GridPane.setConstraints(boundedMapDominantGenotypeLabel, 2, 2, 2, 1);
+
+        this.grid.getChildren().addAll(unboundedMapDominantGenotypeLabel, boundedMapDominantGenotypeLabel);
+    }
+
+    public void placeGraphsLabel() {
+        Label unboundedMapGraphsLabel = new Label("Graphs");
+        GridPane.setConstraints(unboundedMapGraphsLabel, 0, 4, 2, 1);
+        Label boundedMapGraphsLabel = new Label("Graphs");
+        GridPane.setConstraints(boundedMapGraphsLabel, 2, 4, 2, 1);
+
+        this.grid.getChildren().addAll(unboundedMapGraphsLabel, boundedMapGraphsLabel);
+    }
+
     public void letsStart() {
         this.unboundedMap = new UnboundedMap(this.paramHeight, this.paramWidth, this.paramJungleRatio,
                 this.paramStartEnergy, this.paramMoveEnergy, this.paramPlantEnergy,
@@ -100,11 +128,9 @@ public class App extends Application {
                 this.paramStartEnergy, this.paramMoveEnergy, this.paramPlantEnergy,
                 this.paramNumberOfAnimals, this.magicForBoundedMap);
 
-
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(10, 10, 10, 10));
-        grid.setVgap(10);
-        grid.setHgap(10);
+        this.grid.setPadding(new Insets(10, 10, 10, 10));
+        this.grid.setVgap(10);
+        this.grid.setHgap(10);
 
         GridHandler unboundedMapGrid = new GridHandler(this.unboundedMap, this.paramWidth, this.paramHeight);
         DominantGenotypeHandler unboundedMapDominantGenotypeHandler = new DominantGenotypeHandler(this.unboundedMap);
@@ -116,28 +142,22 @@ public class App extends Application {
         GraphsHandler boundedMapGraphsHandler = new GraphsHandler(this.boundedMap);
         Tracker boundedMapTracker = new Tracker(this.boundedMap);
 
-        Label unboundedMapLabel = new Label("Unbounded Map");
-        GridPane.setConstraints(unboundedMapLabel, 0, 0, 2, 1);
+        placeMapLabel();
+
         GridPane unboundedMapGridPane = unboundedMapGrid.getGrid();
         GridPane.setConstraints(unboundedMapGridPane, 0, 1, 2, 1);
-
-        Label boundedMapLabel = new Label("Bounded Map");
-        GridPane.setConstraints(boundedMapLabel, 2, 0, 2, 1);
         GridPane boundedMapGridPane = boundedMapGrid.getGrid();
         GridPane.setConstraints(boundedMapGridPane, 2, 1, 2, 1);
 
-        Label unboundedMapDominantGenotypeLabel = new Label("Dominant genotype");
-        GridPane.setConstraints(unboundedMapDominantGenotypeLabel, 0, 2, 2, 1);
+        placeGenotypeLabel();
+
         Label unboundedMapDominantGenotype = unboundedMapDominantGenotypeHandler.getGenotypeLabel();
         GridPane.setConstraints(unboundedMapDominantGenotype, 0, 3, 2, 1);
-
-        Label boundedMapDominantGenotypeLabel = new Label("Dominant genotype");
-        GridPane.setConstraints(boundedMapDominantGenotypeLabel, 2, 2, 2, 1);
         Label boundedMapDominantGenotype = boundedMapDominantGenotypeHandler.getGenotypeLabel();
         GridPane.setConstraints(boundedMapDominantGenotype, 2, 3, 2, 1);
 
-        Label unboundedMapGraphsLabel = new Label("Graphs");
-        GridPane.setConstraints(unboundedMapGraphsLabel, 0, 4, 2, 1);
+        placeGraphsLabel();
+
         LineChart<Number, Number> unboundedMapFirstGraph = unboundedMapGraphsHandler.getFirstGraph();
         GridPane.setConstraints(unboundedMapFirstGraph, 0,5);
         LineChart<Number, Number> unboundedMapSecondGraph = unboundedMapGraphsHandler.getSecondGraph();
@@ -147,8 +167,6 @@ public class App extends Application {
         LineChart<Number, Number> unboundedMapForthGraph = unboundedMapGraphsHandler.getForthGraph();
         GridPane.setConstraints(unboundedMapForthGraph, 1,6);
 
-        Label boundedMapGraphsLabel = new Label("Graphs");
-        GridPane.setConstraints(boundedMapGraphsLabel, 2, 4, 2, 1);
         LineChart<Number, Number> boundedMapFirstGraph = boundedMapGraphsHandler.getFirstGraph();
         GridPane.setConstraints(boundedMapFirstGraph, 2,5);
         LineChart<Number, Number> boundedMapSecondGraph = boundedMapGraphsHandler.getSecondGraph();
@@ -260,13 +278,13 @@ public class App extends Application {
 
 
 
-        grid.getChildren().addAll(unboundedMapLabel, unboundedMapGridPane,
-                boundedMapLabel, boundedMapGridPane,
-                unboundedMapDominantGenotypeLabel, unboundedMapDominantGenotype,
-                boundedMapDominantGenotypeLabel, boundedMapDominantGenotype,
-                unboundedMapGraphsLabel, unboundedMapFirstGraph, unboundedMapSecondGraph,
+        grid.getChildren().addAll(unboundedMapGridPane,
+                boundedMapGridPane,
+                unboundedMapDominantGenotype,
+                boundedMapDominantGenotype,
+                unboundedMapFirstGraph, unboundedMapSecondGraph,
                 unboundedMapThirdGraph, unboundedMapForthGraph,
-                boundedMapGraphsLabel, boundedMapFirstGraph, boundedMapSecondGraph,
+                boundedMapFirstGraph, boundedMapSecondGraph,
                 boundedMapThirdGraph, boundedMapForthGraph,
                 unboundedMapStartStopButton, boundedMapStartStopButton,
                 unboundedMapWhenPausedLabel, unboundedMapSaveButton,
@@ -278,9 +296,9 @@ public class App extends Application {
                 boundedMapTrackerStatusLabel, boundedMapTrackerNumberOfChildrenLabel,
                 boundedMapTrackerNumberOfDescendantsLabel, boundedMapEraOfDeathLabel);
 
-        grid.setAlignment(Pos.CENTER);
+        this.grid.setAlignment(Pos.CENTER);
 
-        Scene animationScene = new Scene(grid, 1200, 1500);
+        Scene animationScene = new Scene(this.grid, 1200, 1500);
         this.window.setScene(animationScene);
         this.window.setMaximized(true);
 

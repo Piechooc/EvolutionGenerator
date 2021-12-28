@@ -38,11 +38,7 @@ public class GridHandler {
 
     public Animal setGrid() {
         Platform.runLater(() -> {
-            this.grid.setGridLinesVisible(false);
-            this.grid.setGridLinesVisible(true);
-            this.grid.getRowConstraints().clear();
-            this.grid.getColumnConstraints().clear();
-
+            refreshGrid();
             if(this.trackedAnimal != null && this.trackedAnimal.isDead()){
                 this.trackedAnimal = null;
             }
@@ -52,32 +48,14 @@ public class GridHandler {
                     Vector2d position = new Vector2d(x, y);
                     if (this.map.objectAt(position) instanceof Grass) {
                         Label newLabel = new Label();
-                        newLabel.setMaxSize(this.cellSize, this.cellSize);
-                        newLabel.setMinSize(this.cellSize, this.cellSize);
+                        customiseLabelSize(newLabel);
                         newLabel.setStyle("-fx-background-color: limegreen ;");
-                        grid.add(newLabel, x, y);
+                        this.grid.add(newLabel, x, y);
                     } else if (this.map.objectAt(position) instanceof Animal){
                         Button animalButton = new Button();
-                        animalButton.setPadding(new Insets(0, 0, 0, 0));
-                        animalButton.setMaxSize(this.cellSize, this.cellSize);
-                        animalButton.setMinSize(this.cellSize, this.cellSize);
-                        GridPane.setHalignment(animalButton, HPos.CENTER);
-                        GridPane.setValignment(animalButton, VPos.CENTER);
-                        animalButton.setStyle("-fx-border-color: transparent ");
-
-                        int animalEnergy = ((Animal) this.map.objectAt(position)).getEnergy();
-                        int startEnergy = this.map.getStartEnergy();
-                        if (0 <= animalEnergy && animalEnergy < startEnergy * 0.2) {
-                            animalButton.setStyle("-fx-background-color: black");
-                        } else if (startEnergy * 0.2 <= animalEnergy && animalEnergy < startEnergy * 0.4) {
-                            animalButton.setStyle("-fx-background-color: dimgray");
-                        } else if (startEnergy * 0.4 <= animalEnergy && animalEnergy < startEnergy * 0.6) {
-                            animalButton.setStyle("-fx-background-color: darkgrey");
-                        } else if (startEnergy * 0.6 <= animalEnergy && animalEnergy < startEnergy * 0.8) {
-                            animalButton.setStyle("-fx-background-color: lightgray");
-                        } else if (startEnergy * 0.8 <= animalEnergy) {
-                            animalButton.setStyle("-fx-background-color: white");
-                        }
+                        customiseButton(animalButton);
+                        String color = chooseColor((Animal) this.map.objectAt(position));
+                        animalButton.setStyle("-fx-background-color: " + color);
 
                         animalButton.setOnAction(click -> {
                             this.alertHandler.handleAnimalGenotype((Animal) this.map.objectAt(position));
@@ -92,23 +70,59 @@ public class GridHandler {
                                 this.trackedAnimal = null;
                             }
                         });
-
-                        grid.add(animalButton, x, y);
+                        this.grid.add(animalButton, x, y);
                     } else {
                         Label newLabel = new Label();
-                        newLabel.setMaxSize(this.cellSize, this.cellSize);
-                        newLabel.setMinSize(this.cellSize, this.cellSize);
-                        if (map.isInJungle(position)) {
+                        customiseLabelSize(newLabel);
+                        if (this.map.isInJungle(position)) {
                             newLabel.setStyle("-fx-background-color: forestgreen;");
                         } else {
                             newLabel.setStyle("-fx-background-color: greenyellow;");
                         }
-                        grid.add(newLabel, x, y);
+                        this.grid.add(newLabel, x, y);
                     }
                 }
             }
         });
 
         return this.trackedAnimal;
+    }
+
+    public void customiseLabelSize(Label label) {
+        label.setMaxSize(this.cellSize, this.cellSize);
+        label.setMinSize(this.cellSize, this.cellSize);
+    }
+
+    public void refreshGrid() {
+        this.grid.setGridLinesVisible(false);
+        this.grid.setGridLinesVisible(true);
+        this.grid.getRowConstraints().clear();
+        this.grid.getColumnConstraints().clear();
+    }
+
+    public void customiseButton(Button button) {
+        button.setPadding(new Insets(0, 0, 0, 0));
+        button.setMaxSize(this.cellSize, this.cellSize);
+        button.setMinSize(this.cellSize, this.cellSize);
+        GridPane.setHalignment(button, HPos.CENTER);
+        GridPane.setValignment(button, VPos.CENTER);
+        button.setStyle("-fx-border-color: transparent ");
+    }
+
+    public String chooseColor(Animal animal) {
+        int animalEnergy = animal.getEnergy();
+        int startEnergy = this.map.getStartEnergy();
+        if (0 <= animalEnergy && animalEnergy < startEnergy * 0.2) {
+            return "black";
+        } else if (startEnergy * 0.2 <= animalEnergy && animalEnergy < startEnergy * 0.4) {
+            return "dimgray";
+        } else if (startEnergy * 0.4 <= animalEnergy && animalEnergy < startEnergy * 0.6) {
+            return "darkgrey";
+        } else if (startEnergy * 0.6 <= animalEnergy && animalEnergy < startEnergy * 0.8) {
+            return "lightgray";
+        } else if (startEnergy * 0.8 <= animalEnergy) {
+            return "white";
+        }
+        return "transparent";
     }
 }
