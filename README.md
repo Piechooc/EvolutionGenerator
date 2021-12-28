@@ -1,7 +1,7 @@
 # EvolutionGenerator
 
-Kilka cennych informacji:
-- lewy górny brzeg mapy ma współrzędne (0, 0);
-- im jaśniejsze jest zwierzę, tym więcej ma energii;
-- dżungla zaznaczona jest najciemniejszym zielonym, trawa środkowym, a step najjaśniejszym;
-- wskazane zwierzę zmienia swój kolor na czerwony, póki nie wznowi się animacji.
+NOTE:
+- upper left corner position is (0, 0);
+- the lighter the animal, the bigger its energy;
+- jungle is represented by darkest green, grass by middle green and steppe by lightest green;
+- color of the selected animal is changed to red until the thread is resumed.
