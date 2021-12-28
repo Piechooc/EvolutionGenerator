@@ -45,6 +45,7 @@ public class ThreadedSimulationEngine  implements IEngine, Runnable{
                 this.gridHandler.setGrid();
                 this.dominantGenotypeHandler.setGenotypeLabel();
                 this.graphsHandler.setGraphs();
+                this.map.updateDataLines();
                 this.map.nextEra();
 
                 try {

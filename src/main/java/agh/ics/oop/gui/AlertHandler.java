@@ -42,4 +42,10 @@ public class AlertHandler {
         this.alert.setContentText("Positions of animals with dominant genotype: " + positions.toString());
         Platform.runLater(this.alert::show);
     }
+
+    public void handleSave() {
+        this.alert.setTitle("Saved!");
+        this.alert.setContentText("File saved");
+        Platform.runLater(this.alert::show);
+    }
 }

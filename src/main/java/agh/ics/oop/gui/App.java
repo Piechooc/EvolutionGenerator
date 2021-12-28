@@ -18,6 +18,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class App extends Application {
     private Stage window;
 
@@ -223,14 +225,27 @@ public class App extends Application {
         Button unboundedMapSaveButton = new Button("Save");
         GridPane.setConstraints(unboundedMapSaveButton, 0, 9, 2,1);
         unboundedMapSaveButton.setMinSize(70, 30);
-//        GridPane.setHalignment(unboundedMapSaveButton, HPos.CENTER);
+        unboundedMapSaveButton.setOnAction(click -> {
+            if (!this.unboundedMap.isRunning()){
+                AlertHandler alertHandler = new AlertHandler(this.unboundedMap);
+                alertHandler.handleSave();
+                try {
+                    this.unboundedMap.saveFile("src/main/resources/UnboundedMapData.csv");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         Button unboundedMapShowAnimalsWithDominantGenotypeButton = new Button("Show Animals With Dominant Genotype");
         GridPane.setConstraints(unboundedMapShowAnimalsWithDominantGenotypeButton, 0, 10,2,1);
         unboundedMapShowAnimalsWithDominantGenotypeButton.setMinSize(70, 30);
 //        GridPane.setHalignment(unboundedMapShowAnimalsWithDominantGenotypeButton, HPos.CENTER);
         unboundedMapShowAnimalsWithDominantGenotypeButton.setOnAction(click -> {
-            AlertHandler alertHandler = new AlertHandler(this.unboundedMap);
-            alertHandler.handleAllAnimalsWithDominantGenotype(this.unboundedMap.getAnimalsWithDominantGenotype());
+            if (!this.unboundedMap.isRunning()){
+                AlertHandler alertHandler = new AlertHandler(this.unboundedMap);
+                alertHandler.handleAllAnimalsWithDominantGenotype(this.unboundedMap.getAnimalsWithDominantGenotype());
+            }
         });
 
         Label boundedMapWhenPausedLabel = new Label("Things you can do when simulation's paused:");
@@ -239,14 +254,26 @@ public class App extends Application {
         Button boundedMapSaveButton = new Button("Save");
         GridPane.setConstraints(boundedMapSaveButton, 2, 9,2,1);
         boundedMapSaveButton.setMinSize(70, 30);
-//        GridPane.setHalignment(boundedMapSaveButton, HPos.CENTER);
+        boundedMapSaveButton.setOnAction(click -> {
+            if (!this.boundedMap.isRunning()) {
+                AlertHandler alertHandler = new AlertHandler(this.boundedMap);
+                alertHandler.handleSave();
+                try {
+                    this.boundedMap.saveFile("src/main/resources/BoundedMapData.csv");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         Button boundedMapShowAnimalsWithDominantGenotypeButton = new Button("Show Animals With Dominant Genotype");
         GridPane.setConstraints(boundedMapShowAnimalsWithDominantGenotypeButton, 2, 10,2,1);
         boundedMapShowAnimalsWithDominantGenotypeButton.setMinSize(70, 30);
-//        GridPane.setHalignment(boundedMapShowAnimalsWithDominantGenotypeButton, HPos.CENTER);
         boundedMapShowAnimalsWithDominantGenotypeButton.setOnAction(click -> {
-            AlertHandler alertHandler = new AlertHandler(this.boundedMap);
-            alertHandler.handleAllAnimalsWithDominantGenotype(this.boundedMap.getAnimalsWithDominantGenotype());
+            if (!this.boundedMap.isRunning()){
+                AlertHandler alertHandler = new AlertHandler(this.boundedMap);
+                alertHandler.handleAllAnimalsWithDominantGenotype(this.boundedMap.getAnimalsWithDominantGenotype());
+            }
         });
 
 

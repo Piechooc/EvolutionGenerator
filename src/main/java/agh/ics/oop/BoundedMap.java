@@ -29,5 +29,10 @@ public class BoundedMap extends AbstractWorldMap implements IWorldMap, IPosition
         int jungleWidth = (int) (this.width * this.jungleRatio);
         this.jungleUpperRight = new Vector2d(middle.x + (jungleWidth / 2), middle.y + (jungleHeight / 2));
         this.jungleLowerLeft = new Vector2d(middle.x - (jungleWidth / 2), middle.y - (jungleHeight / 2));
+        this.allNumberOfAnimals = 0;
+        this.allNumberOfPlants = 0;
+        this.allAverageEnergy = 0;
+        this.allAverageLifespan = 0;
+        this.allAverageBabies = 0;
     }
 }

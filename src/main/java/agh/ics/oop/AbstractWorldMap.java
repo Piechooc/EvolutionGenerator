@@ -1,7 +1,14 @@
 package agh.ics.oop;
 
+import agh.ics.oop.gui.CSVWriter;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
@@ -43,6 +50,14 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     protected ArrayList<Animal> animalsWithDominantGenotype = new ArrayList<>();
     protected Genotype dominantGenotype;
     protected int numberOfAnimalsWithDominantGenotype;
+
+    //file
+    protected List<String[]> dataLines = new ArrayList<>();
+    protected int allNumberOfAnimals;
+    protected int allNumberOfPlants;
+    protected double allAverageEnergy;
+    protected double allAverageLifespan;
+    protected double allAverageBabies;
 
     @Override
     public boolean canMoveTo(Vector2d position) {
@@ -298,6 +313,72 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
         }
     }
 
+    public void updateDataLines() {
+        int thisEra = getEra();
+        int thisEraNumberOfAnimals = getNumberOfAnimals();
+        int thisEraNumberOfPlants = getNumberOfPlants();
+        double thisEraAverageEnergy = getAverageEnergy();
+        double thisEraAverageLifespan = getAverageLifespan();
+        double thisEraAverageBabies = getAverageNumberOfBabies();
+
+        this.allNumberOfAnimals += thisEraNumberOfAnimals;
+        this.allNumberOfPlants += thisEraNumberOfPlants;
+        this.allAverageEnergy += thisEraAverageEnergy;
+        this.allAverageLifespan += thisEraAverageLifespan;
+        this.allAverageBabies += thisEraAverageBabies;
+
+        this.dataLines.add(new String[] {
+                String.valueOf(thisEra),
+                String.valueOf(thisEraNumberOfAnimals),
+                String.valueOf(thisEraNumberOfPlants),
+                String.valueOf(thisEraAverageEnergy),
+                String.valueOf(thisEraAverageLifespan),
+                String.valueOf(thisEraAverageBabies)});
+    }
+
+    public void finishDataLines() {
+        int thisEra = getEra();
+        this.dataLines.add(new String[] {
+                "SaveEra",
+                "Average of number of animals",
+                "Average of number of plants",
+                "Average of average energy",
+                "Average of average lifespan",
+                "Average of average amount of babies"});
+
+        this.dataLines.add(new String[] {
+                String.valueOf(thisEra),
+                String.valueOf((double) (this.allNumberOfAnimals / thisEra)),
+                String.valueOf((double) (this.allNumberOfPlants / thisEra)),
+                String.valueOf( (this.allAverageEnergy / thisEra)),
+                String.valueOf((this.allAverageLifespan / thisEra)),
+                String.valueOf((this.allAverageBabies / thisEra))});
+    }
+
+    public String convertToCSV(String[] data) {
+        return String.join(",", data);
+    }
+
+    public void saveFile(String fileName) throws IOException {
+        finishDataLines();
+        File file = new File(fileName);
+        if (file.createNewFile()) {
+            CSVWriter csvWriter = new CSVWriter(file, null);
+            csvWriter.writeHeader(new String[]{
+                    "Era",
+                    "Number of animals",
+                    "Number of plants",
+                    "Average energy",
+                    "Average lifespan",
+                    "Average amount of babies"});
+            for (String [] row : this.dataLines) {
+                csvWriter.writeData(row);
+            }
+            csvWriter.close();
+        }
+    }
+
+
     @Override
     public void positionChanged(Vector2d oldPosition, Vector2d newPosition, Animal animal) {
         if (canMoveTo(newPosition)) {
@@ -344,6 +425,10 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
 
     public ArrayList<Animal> getAnimalsWithDominantGenotype() {
         return this.animalsWithDominantGenotype;
+    }
+
+    public List<String[]> getDataLines() {
+        return this.dataLines;
     }
 
     public int getStartEnergy() {
